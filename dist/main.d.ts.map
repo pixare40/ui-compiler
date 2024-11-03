@@ -1,1 +1,0 @@
-{"mappings":"AAOA;IACC,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;CACd;AAcD,yBAAyB,KAAK,EAAE,MAAM,GAAG,KAAK,EAAE,CAkD/C","sources":["src/src/lexer.ts","src/src/index.ts","src/index.ts"],"sourcesContent":[null,null,"export { tokenize } from './lexer';"],"names":[],"version":3,"file":"main.d.ts.map"}
