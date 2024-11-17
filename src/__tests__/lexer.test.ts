@@ -5,8 +5,8 @@ test('tokenize with components', () => {
         hero {
             actions {
                 button {
-                    text: "Restart"
-                    label: "restart"
+                    (text: "Restart")
+                    (label: "restart")
                 }
                 button {
                     text: "Pause"

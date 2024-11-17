@@ -6,6 +6,8 @@ export enum TokenType {
     CurlyClose = 'CurlyClose',
     EOF = 'EOF',
     Colon = 'Colon',
+    Comma = 'Comma',
+    SemiColon = 'SemiColon',
 }
 
 export interface Token {
@@ -66,6 +68,18 @@ export function tokenize(input: string): Token[] {
             continue
         }
 
+        if (char === ',') {
+            tokens.push({ type: TokenType.Comma, value: ',' })
+            cursor++
+            continue
+        }
+
+        if (char === ';') {
+            tokens.push({ type: TokenType.SemiColon, value: ';' })
+            cursor++
+            continue
+        }
+
         if (isAlphaNumeric(char)) {
             let value = ''
             while (isAlphaNumeric(input[cursor])) {
@@ -76,10 +90,11 @@ export function tokenize(input: string): Token[] {
             continue
         }
 
-        tokens.push({ type: TokenType.EOF, value: 'EOF' })
         //console.log('Unexpected character:', char);
         cursor++
     }
+
+    tokens.push({ type: TokenType.EOF, value: 'EOF' })
 
     return tokens
 }
