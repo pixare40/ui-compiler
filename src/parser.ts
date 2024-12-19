@@ -127,8 +127,7 @@ export default class Parser {
         let name = ''
 
         if (this.tokens[0].type === TokenType.Identifier) {
-            name = this.tokens[0].value
-            this.tokens.shift()
+            name = this.advance().value
         }
 
         let properties: Property[] = []
@@ -143,7 +142,6 @@ export default class Parser {
             ) {
                 components.push(this.parseComponent())
             } else if (this.currentToken().type === TokenType.SemiColon) {
-                // this.tokens.shift()
                 break
             } else {
                 console.log(
@@ -156,21 +154,22 @@ export default class Parser {
             }
         }
 
-        if (
-            this.currentToken().type !== TokenType.CurlyClose &&
-            this.currentToken().type !== TokenType.SemiColon
-        ) {
-            console.log(
-                'Expected a closing curly or a semicolon',
-                this.tokens[0]
-            )
-            throw new Error('Expected a closing curly or a semicolon', {
-                cause: this.currentToken(),
-            })
-        }
-
+        // if we encounter a semi colon it is a terminator for a parameterised component
         if (this.currentToken().type === TokenType.SemiColon) {
             this.tokens.shift()
+            return {
+                kind: 'Component',
+                name,
+                properties,
+                components,
+            }
+        }
+
+        if (this.currentToken().type !== TokenType.CurlyClose) {
+            console.log('Expected a closing curly', this.tokens[0])
+            throw new Error('Expected a closing curly', {
+                cause: this.currentToken(),
+            })
         }
 
         if (this.currentToken().type === TokenType.CurlyClose) {
@@ -195,11 +194,18 @@ export default class Parser {
                 return this.parseProperty()
             case TokenType.CurlyOpen:
                 const component = this.parseComponent()
+                // close final curly brace
+                if (this.currentToken().type === TokenType.CurlyClose) {
+                    this.tokens.shift()
+                }
                 return component
             // what I am assuming here is that after the curly open we will have an identifier of the
             // next identifier of a component.
 
             default:
+                if (this.currentToken().type === TokenType.EOF) {
+                    console.log('Unexpected End of File')
+                }
                 console.log(
                     'Unexpected token found parsing statement',
                     this.tokens[0]

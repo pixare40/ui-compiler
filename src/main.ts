@@ -11,8 +11,22 @@ async function repl() {
         {
         hero {
                 actions {
-                    button1(text: Continue, label: continue);
-                    button2(text: Restart, label: restart);
+                    button(text: Continue, label: continue);
+                    button(text: Restart, label: restart);
+                    button(text: Exit, label: exit);
+                }
+                contents{
+                    tagList(textBlock: 24m26s, tag: 24m26s);
+                }
+            }
+        hero {
+                actions {
+                    button(text: Continue, label: continue);
+                    button(text: Restart, label: restart);
+                    button(text: Exit, label: exit);
+                }
+                contents{
+                    tagList(textBlock: 24m26s, tag: 24m26s);
                 }
             }
         }
