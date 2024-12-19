@@ -1,3 +1,4 @@
+import { addCommonPartial } from '../decorators/addCommonPartial'
 import { componentName } from '../decorators/componentName'
 import { BaseNode } from './base'
 
@@ -12,9 +13,11 @@ export class Button extends BaseNode {
         this.label = label
     }
 
+    @addCommonPartial
     renderTemplate(): string {
         return `{
-            "$type": "${this.propertyName || this.constructor.name}"
+            "text": "${this.text}",
+            "label": "${this.label}
         }`
     }
 }
