@@ -28,27 +28,24 @@ export default class Parser {
             )
         }
 
-        const valueToken = this.advance()
+        // take all tokens until the closing single quote
+        let value = ''
+        while (this.currentToken().type !== TokenType.SingleQuote) {
+            value += this.advance().value
+        }
 
-        if (valueToken.type !== TokenType.Identifier) {
+        if (this.currentToken().type !== TokenType.SingleQuote) {
             throw throwApplicationError(
-                `${ErrorValueObject.UnexpectedToken} parsing attribute value, Expected identifier`,
-                valueToken.value
+                `${ErrorValueObject.UnexpectedToken} parsing attribute value, Excpected closing single quote`,
+                this.currentToken().value
             )
         }
 
-        const closingToken = this.advance()
-
-        if (closingToken.type !== TokenType.SingleQuote) {
-            throw throwApplicationError(
-                `${ErrorValueObject.UnexpectedToken} parsing attribute value, Expected closing single quote`,
-                closingToken.value
-            )
-        }
+        this.advance()
 
         return {
             kind: 'Identifier',
-            symbol: valueToken.value,
+            symbol: value,
         }
     }
 
@@ -91,16 +88,12 @@ export default class Parser {
         while (this.currentToken().type !== TokenType.CloseParen) {
             attributes.push(this.parseAttribute())
 
-            // In a property list the only valid separator is a comma
             if (this.currentToken().type === TokenType.Comma) {
                 this.advance()
-            } else if (this.currentToken().type !== TokenType.CloseParen) {
-                throw throwApplicationError(
-                    `${ErrorValueObject.UnexpectedToken} parsing attributes, expected comma or closing parenthesis`,
-                    this.currentToken().value
-                )
             }
         }
+
+        this.advance()
 
         return attributes
     }

@@ -14,11 +14,10 @@ async function repl() {
                     button(text: 'Continue', label: 'continue')
                 }
                 contents{
-                    tagList(textBlock: '24m26s', tag: '24m26s')
+                    tagList(textBlock: '24m 26s', tag: '24m 26s')
                 }
             }
         }
     `
     const ast = parser.produceAST(input)
-    console.log(ast)
 }
