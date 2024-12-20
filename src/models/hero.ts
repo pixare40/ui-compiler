@@ -1,7 +1,7 @@
 import { componentName } from '../decorators/componentName'
 import { throwApplicationError } from '../utils/utils'
 import { BaseNode } from './base'
-import { ERROR_INVALID_CHILD_COMPONENT } from './error_constants'
+import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
 import { contents } from './renderFunctions'
 import { vNode } from './types'
 

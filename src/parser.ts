@@ -2,13 +2,14 @@ import {
     Template,
     BinaryExpression,
     Identifier,
-    Expression,
     Statement,
     Property,
     Component,
 } from './ast'
 import { Error } from './types'
 import { tokenize, Token, TokenType } from './lexer'
+import { throwApplicationError } from './utils/utils'
+import { ErrorValueObject } from './constants/error_constants'
 
 export default class Parser {
     private tokens: Token[] = []
@@ -21,199 +22,89 @@ export default class Parser {
         return this.tokens.shift() as Token
     }
 
-    private parseIdentifier(): Identifier {
-        if (this.tokens[0].type !== TokenType.Identifier) {
-            console.log('Expected an identifier', this.tokens[0])
-            throw new Error('Expected an identifier', {
-                cause: this.tokens[0],
-            })
-        }
-        return {
-            kind: 'Identifier',
-            symbol: this.advance().value, // potential bug
-        }
-    }
-
     private currentToken(): Token {
         return this.tokens[0]
     }
 
-    // Will likely not be in use in the first iteration.
-    // We are not evaluating expressions more like converting them to a different format.
-    private parseExpression(): Statement {
-        this.tokens.shift()
-        const identifier = this.parseIdentifier()
-        const expression: BinaryExpression = {
-            kind: 'BinaryExpression',
-            operator: identifier.symbol,
-            left: this.parseStatement(),
-            right: this.parseStatement(),
-        }
-        this.tokens.shift()
-        return expression
-    }
-
-    private parseProperty(): Property {
-        if (this.currentToken().type !== TokenType.Identifier) {
-            console.log('Expected an identifier, got', this.currentToken())
-            throw new Error('Expected an identifier', {
-                cause: this.currentToken(),
-            })
-        }
-
-        const identifier = this.parseIdentifier()
-
-        if (this.currentToken().type !== TokenType.Colon) {
-            console.log(
-                'Expected a colon between property key and value, got',
-                this.currentToken().value
-            )
-            throw new Error('Expected a colon', {
-                cause: this.currentToken(),
-            })
-        }
-
-        this.tokens.shift() // Shift the colon
-
-        const value = this.parseIdentifier()
-        const property: Property = {
-            kind: 'Property',
-            key: identifier,
-            value,
-        }
-
-        return property
-    }
-
-    private parseProperties(): Property[] {
-        if (this.tokens[0].type !== TokenType.OpenParen) {
-            console.log('Expected an open paren', this.tokens[0])
-            throw new Error('Expected an open paren', {
-                cause: this.tokens[0],
-            })
-        }
-
-        this.tokens.shift() // Shift the open paren
-
-        const properties: Property[] = []
-
-        // properties are optional and take the form (key: value, key: value) with a semicolon terminator
-        while (this.currentToken().type !== TokenType.CloseParen) {
-            properties.push(this.parseProperty())
-
-            if (this.currentToken().type === TokenType.Comma) {
-                this.tokens.shift() // Shift the comma
-            }
-        }
-
-        if (this.currentToken().type !== TokenType.CloseParen) {
-            console.log('Expected a closing paren', this.tokens[0])
-            throw new Error('Expected a closing paren', {
-                cause: this.currentToken(),
-            })
-        }
-
-        this.tokens.shift() // Shift the closing paren
-
-        return properties
-    }
-
     private parseComponent(): Component {
-        if (this.currentToken().type === TokenType.CurlyOpen) {
-            // I Know I know. Not good. But I am trying to get this to work first
-            this.tokens.shift()
-        }
+        const token = this.advance()
 
-        let name = ''
-
-        if (this.tokens[0].type === TokenType.Identifier) {
-            name = this.advance().value
-        }
-
-        let properties: Property[] = []
-        const components: Component[] = []
-
-        while (this.currentToken().type !== TokenType.CurlyClose) {
-            if (this.currentToken().type === TokenType.OpenParen) {
-                properties = this.parseProperties()
-            } else if (
-                this.currentToken().type === TokenType.CurlyOpen ||
-                this.currentToken().type === TokenType.Identifier
-            ) {
-                components.push(this.parseComponent())
-            } else {
-                console.log(
-                    'Unexpected token found parsing component',
-                    this.tokens[0]
-                )
-                throw new Error('Unexpected token found', {
-                    cause: this.currentToken(),
-                })
-            }
-        }
-
-        if (this.currentToken().type !== TokenType.CurlyClose) {
-            console.log('Expected a closing curly', this.tokens[0])
-            throw new Error('Expected a closing curly', {
-                cause: this.currentToken(),
-            })
-        }
-
-        if (this.currentToken().type === TokenType.CurlyClose) {
-            this.tokens.shift()
+        if (token.type !== TokenType.CurlyOpen) {
+            throwApplicationError(ErrorValueObject.UnexpectedToken, token.value)
         }
 
         const component: Component = {
             kind: 'Component',
-            name,
-            properties,
-            components,
+            name: '',
+            attributes: [],
+            children: [],
         }
+
+        while (this.currentToken().type !== TokenType.CurlyClose) {
+            const token = this.advance()
+
+            if (token.type === TokenType.Identifier) {
+                component.name = token.value
+            }
+
+            if (token.type === TokenType.Colon) {
+                const key = token.value
+                const value = this.advance().value
+
+                component.attributes?.push({
+                    kind: 'Property',
+                    key: {
+                        kind: 'Identifier',
+                        symbol: key,
+                    },
+                    value: {
+                        kind: 'Identifier',
+                        symbol: value,
+                    },
+                })
+            }
+
+            if (token.type === TokenType.Comma) {
+                continue
+            }
+
+            if (token.type === TokenType.CurlyOpen) {
+                component.children?.push(this.parseComponent())
+            }
+        }
+
+        this.advance()
 
         return component
     }
 
     private parseStatement(): Statement {
-        switch (this.currentToken().type) {
-            case TokenType.Identifier:
-                return this.parseIdentifier()
-            case TokenType.OpenParen:
-                return this.parseProperty()
-            case TokenType.CurlyOpen:
-                const component = this.parseComponent()
-                // close final curly brace
-                if (this.currentToken().type === TokenType.CurlyClose) {
-                    this.tokens.shift()
-                }
-                return component
-            // what I am assuming here is that after the curly open we will have an identifier of the
-            // next identifier of a component.
+        const token = this.currentToken()
 
-            default:
-                if (this.currentToken().type === TokenType.EOF) {
-                    console.log('Unexpected End of File')
-                }
-                console.log(
-                    'Unexpected token found parsing statement',
-                    this.tokens[0]
-                )
-                throw new Error('Unexpected token found parsing statement', {
-                    cause: this.tokens[0],
-                })
+        if (token.type === TokenType.CurlyOpen) {
+            return this.parseComponent()
         }
+
+        if (token.type === TokenType.Identifier) {
+            return this.parseIdentifier()
+        }
+
+        throw new Error('Unexpected token')
     }
 
     public produceAST(input: string): Template {
         this.tokens = tokenize(input)
+
+        console.log('Tokens:', this.tokens)
 
         const template: Template = {
             kind: 'Template',
             body: [],
         }
 
-        // while (this.notEOF()) {
-        //     // template.body.push(this.parseStatement())
-        // }
+        while (this.notEOF()) {
+            template.body.push(this.parseStatement())
+        }
 
         console.log('AST:', template)
 

@@ -40,6 +40,6 @@ export interface Property extends Expression {
 export interface Component extends Expression {
     kind: 'Component'
     name: string
-    properties: Property[]
-    components: Component[]
+    attributes?: Property[]
+    children?: Component[]
 }

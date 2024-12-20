@@ -7,6 +7,7 @@ export enum TokenType {
     EOF = 'EOF',
     Colon = 'Colon',
     Comma = 'Comma',
+    SingleQuote = 'SingleQuote',
 }
 
 export interface Token {
@@ -69,6 +70,12 @@ export function tokenize(input: string): Token[] {
 
         if (char === ',') {
             tokens.push({ type: TokenType.Comma, value: ',' })
+            cursor++
+            continue
+        }
+
+        if (char === "'") {
+            tokens.push({ type: TokenType.SingleQuote, value: "'" })
             cursor++
             continue
         }
