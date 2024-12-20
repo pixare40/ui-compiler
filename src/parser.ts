@@ -141,8 +141,6 @@ export default class Parser {
                 this.currentToken().type === TokenType.Identifier
             ) {
                 components.push(this.parseComponent())
-            } else if (this.currentToken().type === TokenType.SemiColon) {
-                break
             } else {
                 console.log(
                     'Unexpected token found parsing component',
@@ -151,17 +149,6 @@ export default class Parser {
                 throw new Error('Unexpected token found', {
                     cause: this.currentToken(),
                 })
-            }
-        }
-
-        // if we encounter a semi colon it is a terminator for a parameterised component
-        if (this.currentToken().type === TokenType.SemiColon) {
-            this.tokens.shift()
-            return {
-                kind: 'Component',
-                name,
-                properties,
-                components,
             }
         }
 
@@ -218,14 +205,15 @@ export default class Parser {
 
     public produceAST(input: string): Template {
         this.tokens = tokenize(input)
+
         const template: Template = {
             kind: 'Template',
             body: [],
         }
 
-        while (this.notEOF()) {
-            template.body.push(this.parseStatement())
-        }
+        // while (this.notEOF()) {
+        //     // template.body.push(this.parseStatement())
+        // }
 
         console.log('AST:', template)
 

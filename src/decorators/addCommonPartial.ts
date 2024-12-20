@@ -1,7 +1,7 @@
 import { BaseNode } from '../models/base'
 
 export function addCommonPartial(
-    target: any,
+    target: BaseNode,
     propertyKey: 'renderTemplate',
     descriptor: TypedPropertyDescriptor<() => string>
 ): void | TypedPropertyDescriptor<() => string> {
