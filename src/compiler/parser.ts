@@ -1,4 +1,4 @@
-import { Template, Identifier, Statement, Attribute, Component } from './ast'
+import { Template, Identifier, Statement, Attribute, vNode } from './ast'
 import { tokenize, Token, TokenType } from './lexer'
 import { throwApplicationError } from '../utils/utils'
 import { ErrorValueObject } from '../constants/error_constants'
@@ -98,9 +98,9 @@ export default class Parser {
         return attributes
     }
 
-    private parseComponent(): Component {
-        const component: Component = {
-            kind: 'Component',
+    private parseNode(): vNode {
+        const component: vNode = {
+            kind: 'Node',
             name: '',
             attributes: [],
             children: [],
@@ -124,7 +124,7 @@ export default class Parser {
         if (this.currentToken().type === TokenType.OpenBrace) {
             this.advance()
             while (this.currentToken().type !== TokenType.CloseBrace) {
-                component.children?.push(this.parseComponent())
+                component.children?.push(this.parseNode())
             }
             this.advance()
         }
@@ -136,7 +136,7 @@ export default class Parser {
         const token = this.currentToken()
 
         if (token.type === TokenType.Identifier) {
-            return this.parseComponent()
+            return this.parseNode()
         }
 
         throw throwApplicationError(

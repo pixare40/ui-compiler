@@ -1,4 +1,4 @@
-import { vNode } from '../models/types'
+import { vNode } from '../ui-models/types'
 
 export const renderFunctions = new Map<string, Function>([
     ['hero', hero],

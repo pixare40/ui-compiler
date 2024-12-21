@@ -5,8 +5,8 @@ import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
 
 @registerComponent('hero')
 export class Hero extends BaseNode {
-    constructor(children: BaseNode[], zone: string) {
-        super(children, zone)
+    constructor(component: BaseNode) {
+        super(component.children, component.zone)
     }
 
     renderTemplate(): string | null {

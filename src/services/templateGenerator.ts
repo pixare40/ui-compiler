@@ -1,7 +1,7 @@
-import { Component, Statement, Template } from '../compiler/ast'
+import { vNode, Statement, Template } from '../compiler/ast'
 import Parser from '../compiler/parser'
-import { Hero } from '../models/hero'
-import { TagList } from '../models/tagList'
+import { Hero } from '../ui-models/hero'
+import { TagList } from '../ui-models/tagList'
 import { throwApplicationError } from '../utils/utils'
 
 export class TemplateGenerator {
@@ -25,13 +25,13 @@ export class TemplateGenerator {
         return `
         {
             elements: [
-                ${ast.body.map((node) => this.renderNode(node as Component)).join(',')}
+                ${ast.body.map((node) => this.renderNode(node as vNode)).join(',')}
             ]
         }
         `
     }
 
-    public renderNode(node: Component): string {
+    public renderNode(node: vNode): string {
         if (node.kind === 'Component') {
             const component = this.componentMap.get(node.name)
             return new component(node).renderTemplate()

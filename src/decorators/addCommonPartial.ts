@@ -1,4 +1,4 @@
-import { BaseNode } from '../models/base'
+import { BaseNode } from '../ui-models/base'
 
 export function addCommonPartial(
     target: BaseNode,

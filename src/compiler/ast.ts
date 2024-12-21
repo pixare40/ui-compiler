@@ -1,4 +1,4 @@
-export type NodeTypes = 'Template' | 'Identifier' | 'Property' | 'Component'
+export type NodeTypes = 'Template' | 'Identifier' | 'Property' | 'Node'
 
 export interface Statement {
     kind: NodeTypes
@@ -22,10 +22,10 @@ export interface Attribute extends Expression {
     value: Identifier
 }
 
-export interface Component extends Expression {
-    kind: 'Component'
+export interface vNode extends Expression {
+    kind: 'Node'
     name: string
     attributes?: Attribute[]
-    children?: Component[]
+    children?: vNode[]
     zone?: string
 }
