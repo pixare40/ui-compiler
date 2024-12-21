@@ -1,4 +1,11 @@
-import { Template, Identifier, Statement, Attribute, vNode } from './ast'
+import {
+    Template,
+    Identifier,
+    Statement,
+    Attribute,
+    vNode,
+    NodeType,
+} from './ast'
 import { tokenize, Token, TokenType } from './lexer'
 import { throwApplicationError } from '../utils/utils'
 import { ErrorValueObject } from '../constants/error_constants'
@@ -44,7 +51,7 @@ export default class Parser {
         this.advance()
 
         return {
-            kind: 'Identifier',
+            kind: NodeType.Identifier,
             symbol: value,
         }
     }
@@ -64,9 +71,9 @@ export default class Parser {
         const attributeValue = this.parseAttributeValue()
 
         return {
-            kind: 'Property',
+            kind: NodeType.Property,
             key: {
-                kind: 'Identifier',
+                kind: NodeType.Identifier,
                 symbol: keyToken.value,
             },
             value: attributeValue,
@@ -100,7 +107,7 @@ export default class Parser {
 
     private parseNode(): vNode {
         const component: vNode = {
-            kind: 'Node',
+            kind: NodeType.Node,
             name: '',
             attributes: [],
             children: [],
@@ -149,7 +156,7 @@ export default class Parser {
         this.tokens = tokenize(input)
 
         const template: Template = {
-            kind: 'Template',
+            kind: NodeType.Template,
             body: [],
         }
 

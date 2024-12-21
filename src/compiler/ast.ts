@@ -1,36 +1,34 @@
-export const NodeTypesValueObject = {
-    Template: 'Template',
-    Identifier: 'Identifier',
-    Property: 'Property',
-    Node: 'Node',
+export enum NodeType {
+    Template = 'Template',
+    Identifier = 'Identifier',
+    Property = 'Property',
+    Node = 'Node',
 }
 
-export type NodeTypes = keyof typeof NodeTypesValueObject
-
 export interface Statement {
-    kind: NodeTypes
+    kind: string
 }
 
 export interface Template extends Statement {
-    kind: 'Template'
+    kind: NodeType.Template
     body: Statement[]
 }
 
 export interface Expression extends Statement {}
 
 export interface Identifier extends Expression {
-    kind: 'Identifier'
+    kind: NodeType.Identifier
     symbol: string
 }
 
 export interface Attribute extends Expression {
-    kind: 'Property'
+    kind: NodeType.Property
     key: Identifier
     value: Identifier
 }
 
 export interface vNode extends Expression {
-    kind: 'Node'
+    kind: NodeType.Node
     name: string
     attributes?: Attribute[]
     children?: vNode[]
