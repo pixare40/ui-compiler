@@ -1,7 +1,7 @@
 import { Template, Identifier, Statement, Attribute, Component } from './ast'
 import { tokenize, Token, TokenType } from './lexer'
-import { throwApplicationError } from './utils/utils'
-import { ErrorValueObject } from './constants/error_constants'
+import { throwApplicationError } from '../utils/utils'
+import { ErrorValueObject } from '../constants/error_constants'
 
 export default class Parser {
     private tokens: Token[] = []
@@ -107,7 +107,6 @@ export default class Parser {
         }
 
         const token = this.advance()
-        // Generate code to parse the component
         if (token.type !== TokenType.Identifier) {
             throw throwApplicationError(
                 `${ErrorValueObject.UnexpectedToken} parsing component, expected identifier, got`,

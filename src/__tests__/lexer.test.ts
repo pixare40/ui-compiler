@@ -1,4 +1,4 @@
-import { tokenize, TokenType } from '../lexer'
+import { tokenize, TokenType } from '../compiler/lexer'
 
 test('tokenize with components', () => {
     const input = `
