@@ -1,8 +1,8 @@
 import { addCommonPartial } from '../decorators/addCommonPartial'
-import { componentName } from '../decorators/componentName'
+import { registerComponent } from '../decorators/registerComponent'
 import { BaseNode } from './base'
 
-@componentName('header')
+@registerComponent('header')
 export class Header extends BaseNode {
     text: string
     constructor(text: string) {

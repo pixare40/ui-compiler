@@ -1,9 +1,8 @@
-import { componentName } from '../decorators/componentName'
+import { registerComponent } from '../decorators/registerComponent'
 import { BaseNode } from './base'
 
-@componentName('tagList')
+@registerComponent('tagList')
 export class TagList extends BaseNode {
-    
     renderTemplate(): string {
         return `{
             "$type": "${this.propertyName || this.constructor.name}"
