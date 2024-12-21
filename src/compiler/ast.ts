@@ -1,4 +1,11 @@
-export type NodeTypes = 'Template' | 'Identifier' | 'Property' | 'Node'
+export const NodeTypesValueObject = {
+    Template: 'Template',
+    Identifier: 'Identifier',
+    Property: 'Property',
+    Node: 'Node',
+}
+
+export type NodeTypes = keyof typeof NodeTypesValueObject
 
 export interface Statement {
     kind: NodeTypes
