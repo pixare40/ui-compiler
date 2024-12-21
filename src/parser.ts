@@ -23,7 +23,7 @@ export default class Parser {
 
         if (token.type !== TokenType.SingleQuote) {
             throw throwApplicationError(
-                `${ErrorValueObject.UnexpectedToken} parsing attribute value, Excpected opening single quote`,
+                `${ErrorValueObject.UnexpectedToken} parsing attribute value, Excpected opening single quote, got`,
                 token.value
             )
         }
@@ -36,7 +36,7 @@ export default class Parser {
 
         if (this.currentToken().type !== TokenType.SingleQuote) {
             throw throwApplicationError(
-                `${ErrorValueObject.UnexpectedToken} parsing attribute value, Excpected closing single quote`,
+                `${ErrorValueObject.UnexpectedToken} parsing attribute value, Excpected closing single quote, got`,
                 this.currentToken().value
             )
         }
@@ -54,7 +54,7 @@ export default class Parser {
 
         if (this.currentToken().type !== TokenType.Colon) {
             throw throwApplicationError(
-                `${ErrorValueObject.UnexpectedToken} parsing attribute, expected colon`,
+                `${ErrorValueObject.UnexpectedToken} parsing attribute, expected colon, got`,
                 keyToken.value
             )
         }
@@ -78,7 +78,7 @@ export default class Parser {
 
         if (token.type !== TokenType.Identifier) {
             throw throwApplicationError(
-                `${ErrorValueObject.UnexpectedToken} parsing attributes, expected identifier`,
+                `${ErrorValueObject.UnexpectedToken} parsing attributes, expected identifier, got`,
                 token.value
             )
         }
@@ -106,28 +106,29 @@ export default class Parser {
             children: [],
         }
 
-        while (this.currentToken().type !== TokenType.CurlyClose) {
-            const token = this.advance()
-
-            switch (token.type) {
-                case TokenType.Identifier:
-                    component.name = token.value
-                    break
-                case TokenType.CurlyOpen:
-                    component.children?.push(this.parseComponent())
-                    break
-                case TokenType.OpenParen:
-                    component.attributes = this.parseAttributes()
-                    break
-                default:
-                    throw throwApplicationError(
-                        `${ErrorValueObject.UnexpectedToken} parsing component, expected identifier, opening curly brace or opening parenthesis`,
-                        token.value
-                    )
-            }
+        const token = this.advance()
+        // Generate code to parse the component
+        if (token.type !== TokenType.Identifier) {
+            throw throwApplicationError(
+                `${ErrorValueObject.UnexpectedToken} parsing component, expected identifier, got`,
+                token.value
+            )
         }
 
-        console.log('While loop exiting', this.currentToken())
+        component.name = token.value
+
+        if (this.currentToken().type === TokenType.OpenParen) {
+            this.advance()
+            component.attributes = this.parseAttributes()
+        }
+
+        if (this.currentToken().type === TokenType.OpenBrace) {
+            this.advance()
+            while (this.currentToken().type !== TokenType.CloseBrace) {
+                component.children?.push(this.parseComponent())
+            }
+            this.advance()
+        }
 
         return component
     }
@@ -140,7 +141,7 @@ export default class Parser {
         }
 
         throw throwApplicationError(
-            `${ErrorValueObject.UnexpectedToken} parsing statement, expected identifier`,
+            `${ErrorValueObject.UnexpectedToken} parsing statement, expected identifier, got`,
             token.value
         )
     }
@@ -153,28 +154,8 @@ export default class Parser {
             body: [],
         }
 
-        // Shift the statement bound token
-        const token = this.advance()
-        if (token.type !== TokenType.CurlyOpen) {
-            throw throwApplicationError(
-                `${ErrorValueObject.UnexpectedToken} parsing template, expected opening curly brace`,
-                token.value
-            )
-        }
-
         while (this.notEOF()) {
             template.body.push(this.parseStatement())
-
-            // Shift the statement bound token
-            if (this.currentToken().type === TokenType.CurlyClose) {
-                this.advance()
-                break
-            } else {
-                throw throwApplicationError(
-                    `${ErrorValueObject.UnexpectedToken} parsing template, expected closing curly brace`,
-                    this.currentToken().value
-                )
-            }
         }
 
         console.log('AST:', template)

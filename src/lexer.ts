@@ -2,8 +2,8 @@ export enum TokenType {
     OpenParen = 'OpenParen',
     CloseParen = 'CloseParen',
     Identifier = 'Identifier',
-    CurlyOpen = 'CurlyOpen',
-    CurlyClose = 'CurlyClose',
+    OpenBrace = 'OpenBrace',
+    CloseBrace = 'CloseBrace',
     EOF = 'EOF',
     Colon = 'Colon',
     Comma = 'Comma',
@@ -51,13 +51,13 @@ export function tokenize(input: string): Token[] {
         }
 
         if (char === '{') {
-            tokens.push({ type: TokenType.CurlyOpen, value: '{' })
+            tokens.push({ type: TokenType.OpenBrace, value: '{' })
             cursor++
             continue
         }
 
         if (char === '}') {
-            tokens.push({ type: TokenType.CurlyClose, value: '}' })
+            tokens.push({ type: TokenType.CloseBrace, value: '}' })
             cursor++
             continue
         }

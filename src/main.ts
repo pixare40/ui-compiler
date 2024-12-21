@@ -8,16 +8,14 @@ async function repl() {
         'Welcome to UI (Read OOOWEEEEE Like Mr. Poopybutthole) REPL! v1.0.0'
     )
     const input = `
-        {
         hero {
                 actions {
-                    button(text: 'Continue', label: 'continue')
+                    button(text: 'Continue', label: 'continue'){}
                 }
                 contents{
-                    tagList(textBlock: '24m 26s', tag: '24m 26s')
+                    tagList(textBlock: '24m 26s', tag: '24m 26s'){}
                 }
             }
-        }
     `
     const ast = parser.produceAST(input)
 }
