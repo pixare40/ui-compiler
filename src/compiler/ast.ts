@@ -27,4 +27,5 @@ export interface Component extends Expression {
     name: string
     attributes?: Attribute[]
     children?: Component[]
+    zone?: string
 }

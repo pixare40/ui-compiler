@@ -8,7 +8,7 @@ async function repl() {
         'Welcome to UI (Read OOOWEEEEE Like Mr. Poopybutthole) REPL! v1.0.0'
     )
     const input = `
-        hero {
+        hero(zone: 'A') {
                 actions {
                     button(text: 'Continue', label: 'continue')
                 }
@@ -18,4 +18,6 @@ async function repl() {
             }
     `
     const ast = parser.produceAST(input)
+
+    console.log('Template AST:', ast)
 }

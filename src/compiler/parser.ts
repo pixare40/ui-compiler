@@ -157,8 +157,6 @@ export default class Parser {
             template.body.push(this.parseStatement())
         }
 
-        console.log('AST:', template)
-
         return template
     }
 }

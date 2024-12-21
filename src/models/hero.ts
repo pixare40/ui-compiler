@@ -2,15 +2,11 @@ import { registerComponent } from '../decorators/registerComponent'
 import { throwApplicationError } from '../utils/utils'
 import { BaseNode } from './base'
 import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
-import { contents } from './renderFunctions'
-import { vNode } from './types'
 
 @registerComponent('hero')
 export class Hero extends BaseNode {
     constructor(children: BaseNode[], zone: string) {
-        super()
-        this.zone = zone
-        this.children = children
+        super(children, zone)
     }
 
     renderTemplate(): string | null {
