@@ -5,5 +5,6 @@ export const ERROR_ONLY_INVOKE_ON_FUNCTION =
 export const ErrorValueObject = {
     InvalidChildComponent: ERROR_INVALID_CHILD_COMPONENT,
     OnlyInvokeOnFunction: ERROR_ONLY_INVOKE_ON_FUNCTION,
-    UnexpectedToken: 'Unexpected token',
+    UnexpectedToken: 'Syntax Error: Unexpected token',
+    InvalidValue: 'Syntax Error: Invalid value',
 }

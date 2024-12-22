@@ -28,6 +28,26 @@ export default class Parser {
     private parseAttributeValue(): Identifier {
         const token = this.advance()
 
+        // Handle the case where the attribute value is an identifier i.e boolean and numeric values
+        if (token.type === TokenType.Identifier) {
+            // confirm the identigier is a boolean or numeric value
+            if (
+                token.value !== 'true' &&
+                token.value !== 'false' &&
+                isNaN(Number(token.value))
+            ) {
+                throw throwApplicationError(
+                    `${ErrorValueObject.InvalidValue} parsing attribute value, expected boolean or numeric value, got`,
+                    token.value
+                )
+            }
+
+            return {
+                kind: NodeType.Identifier,
+                symbol: token.value,
+            }
+        }
+
         if (token.type !== TokenType.SingleQuote) {
             throw throwApplicationError(
                 `${ErrorValueObject.UnexpectedToken} parsing attribute value, Excpected opening single quote, got`,
