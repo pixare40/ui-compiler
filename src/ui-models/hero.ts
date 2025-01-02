@@ -38,8 +38,8 @@ export class Hero extends BaseNode {
             }
         })
 
-        
-        const herozone = this.zone ? `zone: '${this.zone}'` : ''
+
+        const herozone = this.zone ? `"zone": "${this.zone}",` : ''
 
         return `{
             "$type": "${this.propertyName || this.constructor.name}",
