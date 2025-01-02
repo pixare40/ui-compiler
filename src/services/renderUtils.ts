@@ -19,6 +19,8 @@ export const renderFunctions = new Map<string, Function>([
 
 export function hero(node: vNode): BaseNode {
     const children: BaseNode[] = []
+
+    // TODO: Add zone to hero from the zone property defined on the vNode
     const zone =
         node.attributes?.find((attr) => attr.key.symbol === 'zone')?.value
             .symbol || ''
