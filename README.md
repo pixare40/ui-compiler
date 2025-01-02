@@ -30,4 +30,4 @@ That's all there is to it.
 
 # Known Issues
 - Attribute values cannot be assessed if there is a space for example 
-`button(text: 'Play Next', label: 'playnext')` the Play next text will be intepreted as `PlayNext`. This will be resolved at a later time.
+`button(text: 'Play Next', label: 'playnext')` the Play next text will be intepreted as `PlayNext`. [Fixed](https://github.com/pixare40/ui-compiler/commit/1c244a647cd18250ee9aa5feac685a98bef573a8).
