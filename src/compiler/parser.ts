@@ -54,10 +54,12 @@ export default class Parser {
             )
         }
 
-        // take all tokens until the closing single quote
         let value = ''
         while (this.currentToken().type !== TokenType.SingleQuote) {
             value += this.advance().value
+            if (this.currentToken().type !== TokenType.SingleQuote) {
+                value += ' ' // this is the case when the attribute value is a string
+            }
         }
 
         if (this.currentToken().type !== TokenType.SingleQuote) {
