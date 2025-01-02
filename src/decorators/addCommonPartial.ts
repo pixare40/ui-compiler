@@ -2,7 +2,7 @@ import { BaseNode } from '../ui-models/base'
 
 export function addCommonPartial(
     target: BaseNode,
-    propertyKey: 'renderTemplate',
+    propertyKey: string,
     descriptor: TypedPropertyDescriptor<() => string>
 ): void | TypedPropertyDescriptor<() => string> {
     const originalMethod = descriptor.value

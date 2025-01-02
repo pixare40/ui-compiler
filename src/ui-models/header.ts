@@ -10,7 +10,6 @@ export class Header extends BaseNode {
         this.text = text
     }
 
-    @addCommonPartial
     renderTemplate(): string {
         return `{
                 "text": "${this.text}"

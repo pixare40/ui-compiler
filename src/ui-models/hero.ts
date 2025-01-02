@@ -5,17 +5,17 @@ import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
 
 @registerComponent('hero')
 export class Hero extends BaseNode {
-    constructor(children: BaseNode[], zone: string = '') {
+    constructor(children?: BaseNode[], zone: string = '') {
         super(children, zone)
     }
 
     renderTemplate(): string | null {
-        const childNodeMap: Map<string, string[]> = new Map()
+        const childComponentMap: Map<string, string[]> = new Map()
 
         this.children.forEach((child: BaseNode) => {
             if (child instanceof BaseNode) {
-                if (!childNodeMap.get(child.propertyName)) {
-                    childNodeMap.set(child.propertyName, [])
+                if (!childComponentMap.get(child.propertyName)) {
+                    childComponentMap.set(child.propertyName, [])
                 }
 
                 const template = child.renderTemplate()
@@ -25,14 +25,14 @@ export class Hero extends BaseNode {
                     return
                 }
 
-                childNodeMap.get(child.propertyName)!.push(template)
+                childComponentMap.get(child.propertyName)!.push(template)
             } else {
                 throwApplicationError(ERROR_INVALID_CHILD_COMPONENT, child)
             }
         })
 
         new Array('actions', 'content', 'image', 'header').forEach((key) => {
-            if (!childNodeMap.get(key)) {
+            if (!childComponentMap.get(key)) {
                 throwApplicationError(`Hero component must have ${key} defined`)
                 return
             }
@@ -42,10 +42,10 @@ export class Hero extends BaseNode {
             "$type": "${this.propertyName || this.constructor.name}",
             "$zone": "${this.zone}",
             "attributes": {
-                "actions": ${childNodeMap.get('actions')},
-                "content": ${childNodeMap.get('content')},
-                "image": ${childNodeMap.get('image')},
-                "header": ${childNodeMap.get('header')}
+                "actions": ${childComponentMap.get('actions')},
+                "content": ${childComponentMap.get('content')},
+                "image": ${childComponentMap.get('image')},
+                "header": ${childComponentMap.get('header')}
             }
         }`
     }

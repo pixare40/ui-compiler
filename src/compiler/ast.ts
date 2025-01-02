@@ -27,7 +27,7 @@ export interface Attribute extends Expression {
     value: Identifier
 }
 
-export interface vNode extends Expression {
+export interface vNode extends Statement {
     kind: KindValueObject.Node
     name: string
     attributes?: Attribute[]

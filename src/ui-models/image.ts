@@ -6,7 +6,7 @@ export class Image extends BaseNode {
     source: string
 
     constructor(source: string, zone?: string) {
-        super()
+        super([], zone)
         this.source = source
     }
 
@@ -15,6 +15,7 @@ export class Image extends BaseNode {
             "$type": "${this.propertyName || this.constructor.name}",
             "attributes": {
                 "source": "${this.source}"
+            }
         }`
     }
 }

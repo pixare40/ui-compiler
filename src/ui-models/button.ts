@@ -6,18 +6,35 @@ import { BaseNode } from './base'
 export class Button extends BaseNode {
     public text: string
     public label: string
+    private type: string = 'primary'
+    private action: string
 
-    constructor(text: string, label: string) {
-        super()
+    constructor(
+        text: string,
+        label: string,
+        type: string = 'primary',
+        action: string,
+        zone?: string
+    ) {
+        super([], zone)
         this.text = text
         this.label = label
+        this.type = type
+        this.action = action
     }
 
-    @addCommonPartial
     renderTemplate(): string {
+        const zone = this.zone ? `"$zone": "${this.zone}",` : ''
+
         return `{
-            "text": "${this.text}",
-            "label": "${this.label}
+            "$type": "${(this as any).propertyName || this.constructor.name}",
+            ${zone}
+            "attributes": {
+                "action": "${this.action}",
+                "text": "${this.text}",
+                "label": "${this.label}",
+                "type": "${this.type}"
+            }
         }`
     }
 }
