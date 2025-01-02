@@ -27,3 +27,7 @@ hero(zone: 'A'){
 ```
 
 That's all there is to it.
+
+# Known Issues
+- Attribute values cannot be assessed if there is a space for example 
+`button(text: 'Play Next', label: 'playnext')` the Play next text will be intepreted as PlayNext. This will be resolved at a later time.

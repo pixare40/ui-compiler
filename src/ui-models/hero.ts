@@ -10,12 +10,12 @@ export class Hero extends BaseNode {
     }
 
     renderTemplate(): string | null {
-        const childComponentMap: Map<string, string[]> = new Map()
+        const childNodeMap: Map<string, string[]> = new Map()
 
         this.children.forEach((child: BaseNode) => {
             if (child instanceof BaseNode) {
-                if (!childComponentMap.get(child.propertyName)) {
-                    childComponentMap.set(child.propertyName, [])
+                if (!childNodeMap.get(child.propertyName)) {
+                    childNodeMap.set(child.propertyName, [])
                 }
 
                 const template = child.renderTemplate()
@@ -25,14 +25,14 @@ export class Hero extends BaseNode {
                     return
                 }
 
-                childComponentMap.get(child.propertyName)!.push(template)
+                childNodeMap.get(child.propertyName)!.push(template)
             } else {
                 throwApplicationError(ERROR_INVALID_CHILD_COMPONENT, child)
             }
         })
 
         new Array('actions', 'content', 'image', 'header').forEach((key) => {
-            if (!childComponentMap.get(key)) {
+            if (!childNodeMap.get(key)) {
                 throwApplicationError(`Hero component must have ${key} defined`)
                 return
             }
@@ -42,10 +42,10 @@ export class Hero extends BaseNode {
             "$type": "${this.propertyName || this.constructor.name}",
             "$zone": "${this.zone}",
             "attributes": {
-                "actions": ${childComponentMap.get('actions')},
-                "content": ${childComponentMap.get('content')},
-                "image": ${childComponentMap.get('image')},
-                "header": ${childComponentMap.get('header')}
+                "actions": ${childNodeMap.get('actions')},
+                "content": ${childNodeMap.get('content')},
+                "image": ${childNodeMap.get('image')},
+                "header": ${childNodeMap.get('header')}
             }
         }`
     }
