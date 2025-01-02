@@ -57,6 +57,11 @@ export default class Parser {
         let value = ''
         while (this.currentToken().type !== TokenType.SingleQuote) {
             value += this.advance().value
+            // if value starts with https or http, then it is a url so don't add space between the values
+            if (value.startsWith('https') || value.startsWith('http')) {
+                continue
+            }
+
             if (this.currentToken().type !== TokenType.SingleQuote) {
                 value += ' ' // this is the case when the attribute value is a string
             }

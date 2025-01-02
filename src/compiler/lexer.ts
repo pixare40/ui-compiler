@@ -8,6 +8,8 @@ export enum TokenType {
     Colon = 'Colon',
     Comma = 'Comma',
     SingleQuote = 'SingleQuote',
+    ForwardSlash = 'ForwardSlash',
+    Period = 'Period',
 }
 
 export interface Token {
@@ -70,6 +72,18 @@ export function tokenize(input: string): Token[] {
 
         if (char === ',') {
             tokens.push({ type: TokenType.Comma, value: ',' })
+            cursor++
+            continue
+        }
+
+        if (char === '/') {
+            tokens.push({ type: TokenType.ForwardSlash, value: '/' })
+            cursor++
+            continue
+        }
+
+        if (char === '.') {
+            tokens.push({ type: TokenType.Period, value: '.' })
             cursor++
             continue
         }
