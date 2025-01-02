@@ -10,7 +10,7 @@ export class Image extends BaseNode {
         this.source = source
     }
 
-    renderTemplate(): string {
+    renderTestTemplate(): string {
         return `{
             "$type": "${this.propertyName || this.constructor.name}",
             "attributes": {

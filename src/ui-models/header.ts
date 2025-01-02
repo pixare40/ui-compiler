@@ -10,11 +10,11 @@ export class Header extends BaseNode {
         this.text = text
     }
 
-    renderTemplate(): string {
+    renderTestTemplate(): string {
         return `{
                 "text": "${this.text}"
             }`
     }
 }
 
-console.log(new Header('Hello, World!').renderTemplate())
+console.log(new Header('Hello, World!').renderTestTemplate())

@@ -39,9 +39,9 @@ export function actions(node: vNode): BaseNode {
 
     const actionNode = new GenericNode(children, node.zone || '')
     actionNode.propertyName = 'actions'
-    actionNode.renderTemplate = () => {
+    actionNode.renderTestTemplate = () => {
         return `[
-                ${actionNode.children.map((child) => child.renderTemplate()).join(',')}
+                ${actionNode.children.map((child) => child.renderTestTemplate()).join(',')}
             ]`
     }
 
@@ -56,9 +56,9 @@ export function content(node: vNode): BaseNode {
 
     const contentNode = new GenericNode(children, node.zone || '')
     contentNode.propertyName = 'content'
-    contentNode.renderTemplate = () => {
+    contentNode.renderTestTemplate = () => {
         return `[
-                ${contentNode.children.map((child) => child.renderTemplate()).join(',')}
+                ${contentNode.children.map((child) => child.renderTestTemplate()).join(',')}
             ]`
     }
 

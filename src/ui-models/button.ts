@@ -23,7 +23,7 @@ export class Button extends BaseNode {
         this.action = action
     }
 
-    renderTemplate(): string {
+    renderTestTemplate(): string {
         const zone = this.zone ? `"$zone": "${this.zone}",` : ''
 
         return `{

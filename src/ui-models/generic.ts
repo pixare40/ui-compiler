@@ -5,7 +5,7 @@ export class GenericNode extends BaseNode {
         super(children, zone)
     }
 
-    renderTemplate(): string | null {
+    renderTestTemplate(): string | null {
         return ''
     }
 }

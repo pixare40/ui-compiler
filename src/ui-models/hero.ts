@@ -9,7 +9,7 @@ export class Hero extends BaseNode {
         super(children, zone)
     }
 
-    renderTemplate(): string | null {
+    renderTestTemplate(): string | null {
         const childComponentMap: Map<string, string[]> = new Map()
 
         this.children.forEach((child: BaseNode) => {
@@ -18,7 +18,7 @@ export class Hero extends BaseNode {
                     childComponentMap.set(child.propertyName, [])
                 }
 
-                const template = child.renderTemplate()
+                const template = child.renderTestTemplate()
 
                 if (template == null) {
                     throwApplicationError(ERROR_INVALID_CHILD_COMPONENT, child)
@@ -37,7 +37,6 @@ export class Hero extends BaseNode {
                 return
             }
         })
-
 
         const herozone = this.zone ? `"zone": "${this.zone}",` : ''
 
