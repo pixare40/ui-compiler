@@ -1,6 +1,6 @@
 {
     "name": "ui-compiler",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "source": "src/index.ts",
     "main": "dist/main.js",
     "types": "dist/main.d.ts",
