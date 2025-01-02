@@ -10,7 +10,7 @@ async function repl() {
     const input = `
         hero(zone: 'A') {
                 actions {
-                    button(text: 'Continue', label: 'continue', type: 'primary', action: 'continue')
+                    button(text: 'Continue', label: 'continue', type: 'primary', action: 'play')
                 }
                 contents{
                     tagList(textBlock: '24m 26s', tag: '24m 26s')
