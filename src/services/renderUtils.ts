@@ -19,10 +19,13 @@ export const renderFunctions = new Map<string, Function>([
 
 export function hero(node: vNode): BaseNode {
     const children: BaseNode[] = []
+    const zone =
+        node.attributes?.find((attr) => attr.key.symbol === 'zone')?.value
+            .symbol || ''
     node.children?.forEach((child) => {
         children.push(render(child))
     })
-    const hero = new Hero(children, node.zone || '')
+    const hero = new Hero(children, zone || '')
     return hero
 }
 

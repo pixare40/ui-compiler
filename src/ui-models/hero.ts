@@ -38,9 +38,11 @@ export class Hero extends BaseNode {
             }
         })
 
+        const herozone = this.zone ? `zone: '${this.zone}'` : ''
+
         return `{
             "$type": "${this.propertyName || this.constructor.name}",
-            "$zone": "${this.zone}",
+            ${herozone}
             "attributes": {
                 "actions": ${childComponentMap.get('actions')},
                 "content": ${childComponentMap.get('content')},
