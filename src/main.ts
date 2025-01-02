@@ -4,7 +4,6 @@ import { TemplateGenerator } from './services/templateGenerator'
 repl()
 
 async function repl() {
-    const parser = new Parser()
     console.log(
         'Welcome to UI (Read OOOWEEEEE like Mr. Poopybutthole) REPL! v1.0.0'
     )
@@ -20,13 +19,16 @@ async function repl() {
                 header(text: 'This is a test hero header')
             }
     `
+
+    const parser = new Parser()
+
     const ast = parser.produceAST(input)
 
-    // Generate template test
-    const template = new TemplateGenerator(parser)
-
-    const output = template.generateTemplate(input)
-
     console.log('Template AST:', ast)
+
+    const templateGenerator = new TemplateGenerator(parser)
+
+    const output = templateGenerator.generateTemplate(input)
+
     console.log('Output:', output)
 }
