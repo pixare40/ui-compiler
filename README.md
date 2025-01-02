@@ -1,14 +1,14 @@
 # ui-compiler
 
-This is a small library that converts a markup language to mustache template files.
+This is an experiment on compiler design and using it to build out a usable interface for the Vesper Pagebuilder
 
-It can be used to build out a page builder for Vesper.
+It is a small library that converts a markup language to render tree for consumption on a specific platform.
 
 # The Markup Language
 
-The markup language is not well thought out by any means it was an experiment to understand compiler design. It's basis is a Node. 
+The markup language is not well thought out by any means, it was an experiment to rehash uni concepts on compiler design. It's foundations are based on JSX. 
 
-A node is represented by an identifier and curly braces to delineate it. Example below:
+A Node is represented by an identifier and curly braces to delineate it. Example below:
 
 ``` 
 hero(zone: 'A'){}
@@ -30,4 +30,4 @@ That's all there is to it.
 
 # Known Issues
 - Attribute values that are URLs must start with `http` or `https`
-- Tell me others found
+- Tell me others found.
