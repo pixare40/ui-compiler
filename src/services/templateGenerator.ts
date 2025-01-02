@@ -32,11 +32,6 @@ export class TemplateGenerator {
     }
 
     public renderNode(node: vNode): string {
-        if (node.kind === 'Component') {
-            const component = this.componentMap.get(node.name)
-            return new component(node).renderTemplate()
-        }
-
-        throw throwApplicationError('Invalid node type')
+        return ''
     }
 }

@@ -90,7 +90,6 @@ export function tokenize(input: string): Token[] {
             continue
         }
 
-        //console.log('Unexpected character:', char);
         cursor++
     }
 

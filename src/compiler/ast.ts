@@ -1,4 +1,4 @@
-export enum NodeType {
+export enum KindValueObject {
     Template = 'Template',
     Identifier = 'Identifier',
     Property = 'Property',
@@ -10,25 +10,25 @@ export interface Statement {
 }
 
 export interface Template extends Statement {
-    kind: NodeType.Template
+    kind: KindValueObject.Template
     body: Statement[]
 }
 
 export interface Expression extends Statement {}
 
 export interface Identifier extends Expression {
-    kind: NodeType.Identifier
+    kind: KindValueObject.Identifier
     symbol: string
 }
 
 export interface Attribute extends Expression {
-    kind: NodeType.Property
+    kind: KindValueObject.Property
     key: Identifier
     value: Identifier
 }
 
 export interface vNode extends Expression {
-    kind: NodeType.Node
+    kind: KindValueObject.Node
     name: string
     attributes?: Attribute[]
     children?: vNode[]

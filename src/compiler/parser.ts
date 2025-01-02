@@ -4,7 +4,7 @@ import {
     Statement,
     Attribute,
     vNode,
-    NodeType,
+    KindValueObject,
 } from './ast'
 import { tokenize, Token, TokenType } from './lexer'
 import { throwApplicationError } from '../utils/utils'
@@ -30,7 +30,6 @@ export default class Parser {
 
         // Handle the case where the attribute value is an identifier i.e boolean and numeric values
         if (token.type === TokenType.Identifier) {
-            // confirm the identigier is a boolean or numeric value
             if (
                 token.value !== 'true' &&
                 token.value !== 'false' &&
@@ -43,7 +42,7 @@ export default class Parser {
             }
 
             return {
-                kind: NodeType.Identifier,
+                kind: KindValueObject.Identifier,
                 symbol: token.value,
             }
         }
@@ -71,7 +70,7 @@ export default class Parser {
         this.advance()
 
         return {
-            kind: NodeType.Identifier,
+            kind: KindValueObject.Identifier,
             symbol: value,
         }
     }
@@ -91,9 +90,9 @@ export default class Parser {
         const attributeValue = this.parseAttributeValue()
 
         return {
-            kind: NodeType.Property,
+            kind: KindValueObject.Property,
             key: {
-                kind: NodeType.Identifier,
+                kind: KindValueObject.Identifier,
                 symbol: keyToken.value,
             },
             value: attributeValue,
@@ -127,7 +126,7 @@ export default class Parser {
 
     private parseNode(): vNode {
         const component: vNode = {
-            kind: NodeType.Node,
+            kind: KindValueObject.Node,
             name: '',
             attributes: [],
             children: [],
@@ -176,7 +175,7 @@ export default class Parser {
         this.tokens = tokenize(input)
 
         const template: Template = {
-            kind: NodeType.Template,
+            kind: KindValueObject.Template,
             body: [],
         }
 
