@@ -7,15 +7,19 @@ import { Hero } from '../ui-models/hero'
 import { Image } from '../ui-models/image'
 import { TagList } from '../ui-models/tagList'
 
-export const renderFunctions = new Map<string, Function>([
-    ['hero', hero],
-    ['actions', actions],
-    ['contents', content],
-    ['button', button],
-    ['tagList', tagList],
-    ['image', image],
-    ['header', header],
-])
+export type BranchNodeProcessor = (node: vNode) => BaseNode
+
+export const branchNodeProcessorRegistry = new Map<string, BranchNodeProcessor>(
+    [
+        ['hero', hero],
+        ['actions', actions],
+        ['contents', content],
+        ['button', button],
+        ['tagList', tagList],
+        ['image', image],
+        ['header', header],
+    ]
+)
 
 export function hero(node: vNode): BaseNode {
     const children: BaseNode[] = []
@@ -25,7 +29,7 @@ export function hero(node: vNode): BaseNode {
         node.attributes?.find((attr) => attr.key.symbol === 'zone')?.value
             .symbol || ''
     node.children?.forEach((child) => {
-        children.push(render(child))
+        children.push(processBranch(child))
     })
     const hero = new Hero(children, zone || '')
     return hero
@@ -34,7 +38,7 @@ export function hero(node: vNode): BaseNode {
 export function actions(node: vNode): BaseNode {
     const children: BaseNode[] = []
     node.children?.forEach((child) => {
-        children.push(render(child))
+        children.push(processBranch(child))
     })
 
     const actionNode = new GenericNode(children, node.zone || '')
@@ -54,7 +58,7 @@ export function actions(node: vNode): BaseNode {
 export function content(node: vNode): BaseNode {
     const children: BaseNode[] = []
     node.children?.forEach((child) => {
-        children.push(render(child))
+        children.push(processBranch(child))
     })
 
     const contentNode = new GenericNode(children, node.zone || '')
@@ -118,8 +122,8 @@ export function button(node: vNode): BaseNode {
  * @param node
  * @returns
  */
-export function render(node: vNode): BaseNode {
-    const renderFunction = renderFunctions.get(node.name)
+export function processBranch(node: vNode): BaseNode {
+    const renderFunction = branchNodeProcessorRegistry.get(node.name)
     if (!renderFunction) {
         throw new Error(`No render function found for ${node.name}`)
     }

@@ -1,7 +1,7 @@
 import { vNode } from '../compiler/ast'
 import Parser from '../compiler/parser'
 import { TemplateGenerator } from './base/TemplateGenerator'
-import { render } from './RenderUtils'
+import { processBranch } from './RenderUtils'
 
 export class VesperTemplateGenerator extends TemplateGenerator {
     constructor(parser: Parser) {
@@ -12,7 +12,7 @@ export class VesperTemplateGenerator extends TemplateGenerator {
         return `
         {
             "elements": [
-                ${nodes.map((node) => render(node).renderNode()).join(',')}
+                ${nodes.map((node) => processBranch(node).renderNode()).join(',')}
             ]
         }
         `
