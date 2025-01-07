@@ -2,6 +2,7 @@ import { registerComponent } from '../decorators/registerComponent'
 import { throwApplicationError } from '../utils/utils'
 import { BaseNode } from './base'
 import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
+import { environment } from '../services/environment'
 
 @registerComponent('hero')
 export class Hero extends BaseNode {
@@ -9,7 +10,7 @@ export class Hero extends BaseNode {
         super(children, zone)
     }
 
-    renderTestTemplate(): string | null {
+    test(): string | null {
         const childComponentMap: Map<string, string[]> = new Map()
 
         this.children.forEach((child: BaseNode) => {
@@ -18,7 +19,7 @@ export class Hero extends BaseNode {
                     childComponentMap.set(child.propertyName, [])
                 }
 
-                const template = child.renderTestTemplate()
+                const template = child.render()
 
                 if (template == null) {
                     throwApplicationError(ERROR_INVALID_CHILD_COMPONENT, child)
@@ -50,5 +51,9 @@ export class Hero extends BaseNode {
                 "header": ${childComponentMap.get('header')}
             }
         }`
+    }
+
+    render(): string | null {
+        return `` // Return template you desire eg Mustache, HTML, etc
     }
 }

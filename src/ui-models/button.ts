@@ -23,7 +23,7 @@ export class Button extends BaseNode {
         this.action = action
     }
 
-    renderTestTemplate(): string {
+    test(): string {
         const zone = this.zone ? `"$zone": "${this.zone}",` : ''
 
         return `{
@@ -36,5 +36,9 @@ export class Button extends BaseNode {
                 "type": "${this.type}"
             }
         }`
+    }
+
+    render(): string | null {
+        return '' // Return template you desire eg Mustache, HTML, etc
     }
 }

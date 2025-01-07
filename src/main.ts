@@ -1,4 +1,5 @@
 import Parser from './compiler/parser'
+import { environment } from './services/environment'
 import { TemplateGenerator } from './services/templateGenerator'
 
 repl()
@@ -19,6 +20,8 @@ async function repl() {
                 header(text: 'This is a test hero header')
             }
     `
+
+    environment.set('ENV', 'test')
 
     const parser = new Parser()
 

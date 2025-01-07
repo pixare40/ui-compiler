@@ -3,9 +3,13 @@ import { BaseNode } from './base'
 
 @registerComponent('tagList')
 export class TagList extends BaseNode {
-    renderTestTemplate(): string {
+    test(): string {
         return `{
             "$type": "${this.propertyName || this.constructor.name}"
         }`
+    }
+
+    render(): string | null {
+        return `` // Return template you desire eg Mustache, HTML, etc
     }
 }

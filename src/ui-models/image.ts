@@ -10,12 +10,16 @@ export class Image extends BaseNode {
         this.source = source
     }
 
-    renderTestTemplate(): string {
+    test(): string {
         return `{
             "$type": "${this.propertyName || this.constructor.name}",
             "attributes": {
                 "source": "${this.source}"
             }
         }`
+    }
+
+    render(): string | null {
+        return `` // Return template you desire eg Mustache, HTML, etc
     }
 }

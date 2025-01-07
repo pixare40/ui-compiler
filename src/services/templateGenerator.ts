@@ -19,7 +19,7 @@ export class TemplateGenerator {
         return `
         {
             "elements": [
-                ${ast.body.map((node) => render(node as vNode).renderTestTemplate()).join(',')}
+                ${ast.body.map((node) => render(node as vNode).renderNode()).join(',')}
             ]
         }
         `

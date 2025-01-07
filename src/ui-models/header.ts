@@ -10,11 +10,13 @@ export class Header extends BaseNode {
         this.text = text
     }
 
-    renderTestTemplate(): string {
+    test(): string {
         return `{
                 "text": "${this.text}"
             }`
     }
-}
 
-console.log(new Header('Hello, World!').renderTestTemplate())
+    render(): string | null {
+        return '' // Return template you desire eg Mustache, HTML, etc
+    }
+}
