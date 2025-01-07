@@ -5,6 +5,7 @@ import { BaseNode } from './base'
 
 @INode.register
 export class Button extends BaseNode {
+    name = 'button'
     public text: string
     public label: string
     private type: string = 'primary'

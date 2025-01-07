@@ -1,6 +1,7 @@
 import Parser from './compiler/parser'
 import { Environment, environmentService, EnvironmentType } from './services'
 import { VesperTemplateGenerator } from './services/VesperTemplateGenerator'
+import { INode } from './types/nodeTypes'
 
 repl()
 
@@ -41,4 +42,8 @@ async function repl() {
     const formattedOutput = JSON.stringify(JSON.parse(output), null, 4)
 
     console.log('Output:', formattedOutput)
+
+    const noteTypesRegistered = INode.GetImplementations()
+
+    console.log('Node Types:', noteTypesRegistered)
 }

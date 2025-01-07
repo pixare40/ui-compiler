@@ -3,6 +3,7 @@ import { BaseNode } from './base'
 
 @INode.register
 export class Header extends BaseNode {
+    name = 'header'
     text: string
     constructor(text: string) {
         super()

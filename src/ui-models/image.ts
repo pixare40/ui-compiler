@@ -1,8 +1,10 @@
+import { registerComponent } from '../decorators/registerComponent'
 import { INode } from '../types/nodeTypes'
 import { BaseNode } from './base'
 
 @INode.register
-export class Image extends BaseNode {
+export class Image extends BaseNode implements INode {
+    name = 'image'
     source: string
 
     constructor(source: string, zone?: string) {
