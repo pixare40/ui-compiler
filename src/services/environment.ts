@@ -3,9 +3,8 @@ export enum Environment {
 }
 
 export enum EnvironmentType {
-    Test = 'test',
-    Preview = 'dev',
-    Production = 'production',
+    Preview = 'preview',
+    Template = 'template',
 }
 
 export interface IEnvironmentService {
@@ -18,11 +17,11 @@ class EnvironmentService {
     constructor() {
         this.environmentVariables = new Map<string, string>()
     }
-    public getEnvironment(key: Environment): string {
+    public getVariable(key: Environment): string {
         return this.environmentVariables.get(key) || ''
     }
 
-    public setEnvironment(key: Environment, value: string) {
+    public setVariable(key: Environment, value: string) {
         this.environmentVariables.set(key, value)
     }
 }

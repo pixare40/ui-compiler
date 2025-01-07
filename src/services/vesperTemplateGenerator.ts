@@ -1,26 +1,11 @@
 import { vNode } from '../compiler/ast'
 import Parser from '../compiler/parser'
-import { Environment, environmentService, EnvironmentType } from './Environment'
+import { TemplateGenerator } from './base/TemplateGenerator'
 import { render } from './RenderUtils'
-import { ITemplateGenerator } from './types'
 
-export class VesperTemplateGenerator implements ITemplateGenerator {
-    private readonly parser: Parser
-
+export class VesperTemplateGenerator extends TemplateGenerator {
     constructor(parser: Parser) {
-        this.parser = parser
-    }
-
-    public generatePreview(input: string): string {
-        environmentService.setEnvironment(
-            Environment.OUTPUT_TYPE,
-            EnvironmentType.Preview
-        )
-
-        const ast = this.parser.produceAST(input) // obtain template from uiml and create a Template
-        const statements = ast.body as vNode[]
-        const template = this.generateTemplate(statements)
-        return template
+        super(parser)
     }
 
     public generateTemplate(nodes: vNode[]): string {

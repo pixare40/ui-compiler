@@ -34,7 +34,7 @@ export abstract class BaseNode {
 
     public renderNode(): string {
         if (
-            environmentService.getEnvironment(Environment.OUTPUT_TYPE) ===
+            environmentService.getVariable(Environment.OUTPUT_TYPE) ===
             EnvironmentType.Preview
         ) {
             return this.preview() || ''
