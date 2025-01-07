@@ -1,7 +1,7 @@
-import { registerComponent } from '../decorators/registerComponent'
+import { INode } from '../types/nodeTypes'
 import { BaseNode } from './base'
 
-@registerComponent('image')
+@INode.register
 export class Image extends BaseNode {
     source: string
 
@@ -12,7 +12,7 @@ export class Image extends BaseNode {
 
     preview(): string {
         return `{
-            "$type": "${this.propertyName || this.constructor.name}",
+            "$type": "${this.name || this.constructor.name}",
             "attributes": {
                 "source": "${this.source}"
             }

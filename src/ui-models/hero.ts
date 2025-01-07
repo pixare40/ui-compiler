@@ -1,10 +1,10 @@
-import { registerComponent } from '../decorators/registerComponent'
 import { throwApplicationError } from '../utils/utils'
 import { BaseNode } from './base'
 import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
+import { INode } from '../types/nodeTypes'
 
-@registerComponent('hero')
-export class Hero extends BaseNode {
+@INode.register
+export class Hero extends BaseNode implements INode {
     constructor(children?: BaseNode[], zone: string = '') {
         super(children, zone)
     }
@@ -14,8 +14,8 @@ export class Hero extends BaseNode {
 
         this.children.forEach((child: BaseNode) => {
             if (child instanceof BaseNode) {
-                if (!childComponentMap.get(child.propertyName)) {
-                    childComponentMap.set(child.propertyName, [])
+                if (!childComponentMap.get(child.name)) {
+                    childComponentMap.set(child.name, [])
                 }
 
                 const template = child.renderNode()
@@ -25,7 +25,7 @@ export class Hero extends BaseNode {
                     return
                 }
 
-                childComponentMap.get(child.propertyName)!.push(template)
+                childComponentMap.get(child.name)!.push(template)
             } else {
                 throwApplicationError(ERROR_INVALID_CHILD_COMPONENT, child)
             }
@@ -41,7 +41,7 @@ export class Hero extends BaseNode {
         const herozone = this.zone ? `"zone": "${this.zone}",` : ''
 
         return `{
-            "$type": "${this.propertyName || this.constructor.name}",
+            "$type": "${this.name || this.constructor.name}",
             ${herozone}
             "attributes": {
                 "actions": ${childComponentMap.get('actions')},

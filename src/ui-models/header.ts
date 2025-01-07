@@ -1,8 +1,7 @@
-import { addCommonPartial } from '../decorators/addCommonPartial'
-import { registerComponent } from '../decorators/registerComponent'
+import { INode } from '../types/nodeTypes'
 import { BaseNode } from './base'
 
-@registerComponent('header')
+@INode.register
 export class Header extends BaseNode {
     text: string
     constructor(text: string) {

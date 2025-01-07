@@ -3,10 +3,12 @@ import {
     environmentService,
     EnvironmentType,
 } from '../services/Environment'
-import { ICoordinates, Style } from '../types/nodeProperties'
+import { ICoordinates, Style } from '../types/nodeTypes'
 
 export abstract class BaseNode {
-    public propertyName: string = ''
+    public id: string = ''
+    public parent: BaseNode | null = null
+    public name: string = ''
     public zone: string = ''
     public children: BaseNode[]
     public optional: boolean = false

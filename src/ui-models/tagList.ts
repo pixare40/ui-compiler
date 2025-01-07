@@ -1,11 +1,11 @@
-import { registerComponent } from '../decorators/registerComponent'
+import { INode } from '../types/nodeTypes'
 import { BaseNode } from './base'
 
-@registerComponent('tagList')
+@INode.register
 export class TagList extends BaseNode {
     preview(): string {
         return `{
-            "$type": "${this.propertyName || this.constructor.name}"
+            "$type": "${this.name || this.constructor.name}"
         }`
     }
 

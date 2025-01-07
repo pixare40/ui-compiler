@@ -38,7 +38,7 @@ export function actions(node: vNode): BaseNode {
     })
 
     const actionNode = new GenericNode(children, node.zone || '')
-    actionNode.propertyName = 'actions'
+    actionNode.name = 'actions'
     actionNode.render = () => {
         return ``
     }
@@ -58,7 +58,7 @@ export function content(node: vNode): BaseNode {
     })
 
     const contentNode = new GenericNode(children, node.zone || '')
-    contentNode.propertyName = 'content'
+    contentNode.name = 'content'
     contentNode.render = () => {
         return ``
     }
