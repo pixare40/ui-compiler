@@ -1,5 +1,9 @@
 import Parser from './compiler/parser'
-import { environment } from './services/environment'
+import {
+    Environment,
+    environment,
+    EnvironmentType,
+} from './services/environment'
 import { TemplateGenerator } from './services/templateGenerator'
 
 repl()
@@ -21,7 +25,7 @@ async function repl() {
             }
     `
 
-    environment.set('ENV', 'test')
+    environment.set(Environment.ENV, EnvironmentType.Preview)
 
     const parser = new Parser()
 

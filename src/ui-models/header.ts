@@ -10,7 +10,7 @@ export class Header extends BaseNode {
         this.text = text
     }
 
-    test(): string {
+    preview(): string {
         return `{
                 "text": "${this.text}"
             }`

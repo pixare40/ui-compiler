@@ -40,8 +40,11 @@ export function actions(node: vNode): BaseNode {
     const actionNode = new GenericNode(children, node.zone || '')
     actionNode.propertyName = 'actions'
     actionNode.render = () => {
+        return ``
+    }
+    actionNode.preview = () => {
         return `[
-                ${actionNode.children.map((child) => child.render()).join(',')}
+                ${actionNode.children.map((child) => child.renderNode()).join(',')}
             ]`
     }
 
@@ -57,8 +60,11 @@ export function content(node: vNode): BaseNode {
     const contentNode = new GenericNode(children, node.zone || '')
     contentNode.propertyName = 'content'
     contentNode.render = () => {
+        return ``
+    }
+    contentNode.preview = () => {
         return `[
-                ${contentNode.children.map((child) => child.render()).join(',')}
+                ${contentNode.children.map((child) => child.renderNode()).join(',')}
             ]`
     }
 

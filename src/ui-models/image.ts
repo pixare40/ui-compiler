@@ -10,7 +10,7 @@ export class Image extends BaseNode {
         this.source = source
     }
 
-    test(): string {
+    preview(): string {
         return `{
             "$type": "${this.propertyName || this.constructor.name}",
             "attributes": {

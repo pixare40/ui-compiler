@@ -1,4 +1,8 @@
-import { environment } from '../services/environment'
+import {
+    Environment,
+    environment,
+    EnvironmentType,
+} from '../services/environment'
 import { ICoordinates } from '../types/coordinates'
 
 export abstract class BaseNode {
@@ -20,14 +24,14 @@ export abstract class BaseNode {
     }
 
     abstract render(): string | null
-    
-    protected test(): string | null {
+
+    public preview(): string | null {
         return ''
     }
 
     public renderNode(): string {
-        if (environment.get('ENV') === 'test') {
-            return this.test() || ''
+        if (environment.get(Environment.ENV) === EnvironmentType.Preview) {
+            return this.preview() || ''
         }
 
         return this.render() || ''

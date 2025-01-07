@@ -3,7 +3,7 @@ import { BaseNode } from './base'
 
 @registerComponent('tagList')
 export class TagList extends BaseNode {
-    test(): string {
+    preview(): string {
         return `{
             "$type": "${this.propertyName || this.constructor.name}"
         }`

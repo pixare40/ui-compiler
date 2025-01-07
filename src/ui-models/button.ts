@@ -23,7 +23,7 @@ export class Button extends BaseNode {
         this.action = action
     }
 
-    test(): string {
+    preview(): string {
         const zone = this.zone ? `"$zone": "${this.zone}",` : ''
 
         return `{
