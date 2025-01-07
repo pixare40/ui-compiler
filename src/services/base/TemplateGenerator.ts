@@ -9,14 +9,13 @@ export abstract class TemplateGenerator {
     }
 
     public generate(statement: string | vNode[]): string {
-        let nodes: vNode[] = []
         if (typeof statement === 'string') {
-            nodes = this.parser.produceAST(statement).body as vNode[]
+            statement = this.parser.produceAST(statement).body as vNode[]
         }
 
-        this.onGenerate(nodes)
+        this.onGenerate(statement)
 
-        return this.generateTemplate(nodes)
+        return this.generateTemplate(statement)
     }
 
     abstract generateTemplate(nodes: vNode[]): string
