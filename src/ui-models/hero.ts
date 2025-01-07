@@ -2,7 +2,6 @@ import { registerComponent } from '../decorators/registerComponent'
 import { throwApplicationError } from '../utils/utils'
 import { BaseNode } from './base'
 import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
-import { environment } from '../services/environment'
 
 @registerComponent('hero')
 export class Hero extends BaseNode {

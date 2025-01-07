@@ -1,6 +1,5 @@
 export * from './compiler/parser'
-export * from './services/templateGenerator'
 export * from './compiler/ast'
 export * from './compiler/lexer'
-export * from './services/renderUtils'
+export * from './services'
 export * from './ui-models/base'
