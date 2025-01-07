@@ -1,8 +1,8 @@
 import {
     Environment,
-    environment,
+    environmentService,
     EnvironmentType,
-} from '../services/environment'
+} from '../services/Environment'
 import { ICoordinates, Style } from '../types/nodeProperties'
 
 export abstract class BaseNode {
@@ -33,7 +33,10 @@ export abstract class BaseNode {
     }
 
     public renderNode(): string {
-        if (environment.get(Environment.ENV) === EnvironmentType.Preview) {
+        if (
+            environmentService.getEnvironment(Environment.OUTPUT_TYPE) ===
+            EnvironmentType.Preview
+        ) {
             return this.preview() || ''
         }
 

@@ -1,8 +1,5 @@
-export const environment = new Map<string, string>()
-
 export enum Environment {
-    ENV = 'ENV',
-    PORT = 'PORT',
+    OUTPUT_TYPE = 'OUTPUT_TYPE',
 }
 
 export enum EnvironmentType {
@@ -10,3 +7,24 @@ export enum EnvironmentType {
     Preview = 'dev',
     Production = 'production',
 }
+
+export interface IEnvironmentService {
+    getEnvironment(key: Environment): string
+    setEnvironment(key: Environment, value: string): void
+}
+
+class EnvironmentService {
+    private readonly environmentVariables: Map<string, string>
+    constructor() {
+        this.environmentVariables = new Map<string, string>()
+    }
+    public getEnvironment(key: Environment): string {
+        return this.environmentVariables.get(key) || ''
+    }
+
+    public setEnvironment(key: Environment, value: string) {
+        this.environmentVariables.set(key, value)
+    }
+}
+
+export const environmentService = new EnvironmentService()

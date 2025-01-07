@@ -1,10 +1,5 @@
 import Parser from './compiler/parser'
-import {
-    Environment,
-    environment,
-    EnvironmentType,
-} from './services/environment'
-import { TemplateGenerator } from './services/templateGenerator'
+import { VesperTemplateGenerator } from './services/VesperTemplateGenerator'
 
 repl()
 
@@ -25,17 +20,17 @@ async function repl() {
             }
     `
 
-    environment.set(Environment.ENV, EnvironmentType.Preview)
-
     const parser = new Parser()
 
     const ast = parser.produceAST(input)
 
     console.log('Template AST:', ast)
 
-    const templateGenerator = new TemplateGenerator(parser)
+    const templateGenerator = new VesperTemplateGenerator(parser)
 
-    const output = templateGenerator.generateTemplate(input)
+    const output = templateGenerator.generatePreview(input)
 
-    console.log('Output:', output)
+    const formattedOutput = JSON.stringify(JSON.parse(output), null, 4)
+
+    console.log('Output:', formattedOutput)
 }
