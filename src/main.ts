@@ -29,7 +29,7 @@ async function repl() {
 
     environmentService.setVariable(
         Environment.OUTPUT_TYPE,
-        EnvironmentType.Template
+        EnvironmentType.Preview
     )
 
     // Generating a preview template
