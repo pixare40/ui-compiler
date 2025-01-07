@@ -3,7 +3,7 @@ import {
     environment,
     EnvironmentType,
 } from '../services/environment'
-import { ICoordinates } from '../types/coordinates'
+import { ICoordinates, Style } from '../types/nodeProperties'
 
 export abstract class BaseNode {
     public propertyName: string = ''
@@ -12,15 +12,18 @@ export abstract class BaseNode {
     public optional: boolean = false
     public multiple: boolean = false
     public coordinates: ICoordinates | undefined = undefined
+    public style: Style | undefined = undefined
 
     constructor(
         children?: BaseNode[],
         zone: string = '',
-        coordinates?: ICoordinates
+        coordinates?: ICoordinates,
+        style?: Style
     ) {
         this.children = children || []
         this.zone = zone
         this.coordinates = coordinates
+        this.style = style
     }
 
     abstract render(): string | null
