@@ -24,7 +24,7 @@ export const NodeAnalyticsProvider: React.FC<NodeAnalyticsProviderProps> = ({
 }) => {
     const trackEvent = (event: string, data: any) => {
         analyticsProvider.forEach((provider) =>
-            provider.trackEvent(event, data)
+            provider?.trackEvent(event, data)
         )
     }
 
