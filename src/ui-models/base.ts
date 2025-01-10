@@ -3,9 +3,10 @@ import {
     environmentService,
     EnvironmentType,
 } from '../services/Environment'
-import { ICoordinates, Style } from '../types/nodeTypes'
+import { IPreviewNode, IRenderNode } from '../types/nodeInterfaces'
+import { ICoordinates, INode, Style } from '../types/nodeTypes'
 
-export abstract class BaseNode {
+export abstract class BaseNode implements IPreviewNode, IRenderNode, INode {
     public id: string = ''
     public parent: BaseNode | null = null
     public name: string = ''

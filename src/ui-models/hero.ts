@@ -4,7 +4,7 @@ import { ERROR_INVALID_CHILD_COMPONENT } from '../constants/error_constants'
 import { INode } from '../types/nodeTypes'
 
 @INode.register
-export class Hero extends BaseNode implements INode {
+export class Hero extends BaseNode {
     constructor(children?: BaseNode[], zone: string = '') {
         super(children, zone)
     }

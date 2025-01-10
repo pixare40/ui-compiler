@@ -3,7 +3,7 @@ import { INode } from '../types/nodeTypes'
 import { BaseNode } from './base'
 
 @INode.register
-export class Image extends BaseNode implements INode {
+export class Image extends BaseNode {
     name = 'image'
     source: string
 
