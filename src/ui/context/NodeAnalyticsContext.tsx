@@ -1,27 +1,27 @@
 import React, { createContext } from 'react'
 import { IAnalyticsProvider } from '../contracts/contracts'
 
-const INITIAL_NODE_ANALYTICS_CONTEXT_VALUE: INodeAnalyticsContextValue = {
+const INITIAL_NODE_ANALYTICS_CONTEXT_VALUE: ILayoutNodeAnalyticsContextValue = {
     trackEvent: () => {},
 }
 
-export const NodeAnalyticsContext = createContext<INodeAnalyticsContextValue>(
-    INITIAL_NODE_ANALYTICS_CONTEXT_VALUE
-)
+export const LayoutNodeAnalyticsContext =
+    createContext<ILayoutNodeAnalyticsContextValue>(
+        INITIAL_NODE_ANALYTICS_CONTEXT_VALUE
+    )
 
-interface NodeAnalyticsProviderProps {
+interface ILayoutNodeAnalyticsProviderProps {
     children: React.ReactNode
     analyticsProvider: IAnalyticsProvider[]
 }
 
-interface INodeAnalyticsContextValue {
+interface ILayoutNodeAnalyticsContextValue {
     trackEvent: (event: string, data: any) => void
 }
 
-export const NodeAnalyticsProvider: React.FC<NodeAnalyticsProviderProps> = ({
-    children,
-    analyticsProvider,
-}) => {
+export const LayoutNodeAnalyticsProvider: React.FC<
+    ILayoutNodeAnalyticsProviderProps
+> = ({ children, analyticsProvider }) => {
     const trackEvent = (event: string, data: any) => {
         analyticsProvider.forEach((provider) =>
             provider?.trackEvent(event, data)
@@ -29,8 +29,8 @@ export const NodeAnalyticsProvider: React.FC<NodeAnalyticsProviderProps> = ({
     }
 
     return (
-        <NodeAnalyticsContext.Provider value={{ trackEvent }}>
+        <LayoutNodeAnalyticsContext.Provider value={{ trackEvent }}>
             {children}
-        </NodeAnalyticsContext.Provider>
+        </LayoutNodeAnalyticsContext.Provider>
     )
 }

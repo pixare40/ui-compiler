@@ -4,20 +4,19 @@ import React, {
     useInsertionEffect,
     useLayoutEffect,
 } from 'react'
-import { NodeAnalyticsContext } from '../context/NodeAnalyticsContext'
+import { LayoutNodeAnalyticsContext } from '../context/NodeAnalyticsContext'
 import { IAnalyticsLayoutMetadata } from '../contracts/contracts'
 import { ErrorBoundary } from './ErrorBoundary'
 
-interface INodeAnalyticsWrapperProps {
+interface ILayoutNodeAnalyticsWrapperProps {
     children: React.ReactNode
-    node: IAnalyticsLayoutMetadata
+    layout: IAnalyticsLayoutMetadata
 }
 
-export const LayoutAnalyticsWrapper: React.FC<INodeAnalyticsWrapperProps> = ({
-    children,
-    node,
-}) => {
-    const analyticsContext = useContext(NodeAnalyticsContext)
+export const LayoutAnalyticsWrapper: React.FC<
+    ILayoutNodeAnalyticsWrapperProps
+> = ({ children, layout }) => {
+    const analyticsContext = useContext(LayoutNodeAnalyticsContext)
     const renderStartTime = useRef<number>(0)
     const paintTime = useRef<number>(0)
 
@@ -37,11 +36,11 @@ export const LayoutAnalyticsWrapper: React.FC<INodeAnalyticsWrapperProps> = ({
             const lastPaint = entries[entries.length - 1]
             paintTime.current = lastPaint.startTime + lastPaint.duration
 
-            if (node.analyticsEvents.onRender) {
-                analyticsContext.trackEvent(node.analyticsEvents.onRender, {
-                    nodeId: node.nodeId,
-                    nodeName: node.nodeName,
-                    zone: node.zone,
+            if (layout.analyticsEvents.onRender) {
+                analyticsContext.trackEvent(layout.analyticsEvents.onRender, {
+                    nodeId: layout.nodeId,
+                    nodeName: layout.nodeName,
+                    zone: layout.zone,
                     renderDuration: layoutTime,
                     paintDuration: paintTime.current - renderStartTime.current,
                     timestamp: Date.now(),
@@ -59,12 +58,12 @@ export const LayoutAnalyticsWrapper: React.FC<INodeAnalyticsWrapperProps> = ({
     })
 
     const onRenderError = (error: any, errorInfo: any) => {
-        if (node.analyticsEvents.onRenderError) {
-            analyticsContext.trackEvent(node.analyticsEvents.onRenderError, {
+        if (layout.analyticsEvents.onRenderError) {
+            analyticsContext.trackEvent(layout.analyticsEvents.onRenderError, {
                 error: { error, errorInfo },
-                nodeId: node.nodeId,
-                nodeName: node.nodeName,
-                zone: node.zone,
+                nodeId: layout.nodeId,
+                nodeName: layout.nodeName,
+                zone: layout.zone,
             })
         }
     }
