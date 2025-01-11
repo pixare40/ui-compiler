@@ -1,5 +1,3 @@
-import { addCommonPartial } from '../decorators/addCommonPartial'
-import { registerComponent } from '../decorators/registerComponent'
 import { INode } from '../types/nodeTypes'
 import { BaseNode } from './base'
 
