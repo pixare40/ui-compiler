@@ -1,4 +1,8 @@
-import { Environment, environmentService, EnvironmentType } from '../services'
+import {
+    Environment,
+    environmentService,
+    EnvironmentType,
+} from '../services/Environment'
 import { IPreviewNode, IRenderNode } from '../types/nodeInterfaces'
 import { ICoordinates, INode, Style } from '../types/nodeTypes'
 

@@ -1,7 +1,7 @@
 import { vNode } from '../compiler/ast'
 import Parser from '../compiler/parser'
 import { TemplateGenerator } from './base/TemplateGenerator'
-import { processBranch } from './renderUtils'
+import { processBranch } from './RenderUtils'
 
 export class VesperTemplateGenerator extends TemplateGenerator {
     constructor(parser: Parser) {
