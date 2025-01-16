@@ -7,7 +7,7 @@ interface ErrorBoundaryProps {
 }
 
 interface ErrorBoundaryState {
-    hasError: boolean
+    hasError: boolean,
 }
 
 export class ErrorBoundary extends React.Component<
