@@ -1,6 +1,10 @@
 import Parser from './compiler/parser'
-import { Environment, environmentService, EnvironmentType } from './services'
-import { VesperTemplateGenerator } from './services/VesperTemplateGenerator'
+import {
+    Environment,
+    environmentService,
+    EnvironmentType,
+    VesperTemplateGenerator,
+} from './services'
 import { INode } from './types/nodeTypes'
 
 repl()
