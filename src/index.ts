@@ -1,6 +1,4 @@
 export * from './compiler/parser'
 export * from './compiler/ast'
 export * from './compiler/lexer'
-export * from './services'
 export * from './ui-models/base'
-export * from './ui'

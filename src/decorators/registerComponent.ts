@@ -1,4 +1,4 @@
-import { componentRegistry } from '../services/ComponentRegistry'
+import { componentRegistry } from '../services'
 
 export function registerComponent(componentName: string) {
     return function (target: Function) {
